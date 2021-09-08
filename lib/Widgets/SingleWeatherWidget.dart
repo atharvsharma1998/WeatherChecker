@@ -14,13 +14,24 @@ class SingleWeatherWidget extends StatefulWidget{
 }
 
 class _SingleWeatherWidgetState extends State<SingleWeatherWidget> {
-  var _locationList = [];
+  var _locationList = locationList;
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   setState(() {
+  //     _locationList = locationList;
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
     setState(() {
+      print("inside set State");
       _locationList = locationList;
     });
+
     return
       Container(
         padding: EdgeInsets.symmetric(horizontal: 20),
