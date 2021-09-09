@@ -18,6 +18,7 @@ class LocationSearch extends StatefulWidget {
 class _LocationSearchState extends State<LocationSearch> {
   TextEditingController locationTextEditingController = TextEditingController();
   final preferenceService = PreferencesService();
+  var _locationList = locationList;
 
 // @override
 // void initState() {
@@ -26,8 +27,12 @@ class _LocationSearchState extends State<LocationSearch> {
 //   }
 
   //var items = ["chennai", "chandigarh", "canada", "toronto", "nashik", "mohali", "panchkula"];
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      _locationList = locationList;
+    });
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -218,7 +223,7 @@ class _LocationSearchState extends State<LocationSearch> {
 
   }
 
-  List<Widget> getListItems() => locationList
+  List<Widget> getListItems() => _locationList
       .asMap()
       .map((i, item) => MapEntry(i, _buildTenableListTile(item, i)))
       .values
@@ -237,9 +242,9 @@ class _LocationSearchState extends State<LocationSearch> {
       },
       background: Container(color: Colors.red),
       child: ListTile(
-        key: ValueKey(item.cityId),
+        key: ValueKey(_locationList[index].cityId),
         title: Text(
-          '${item.city}',
+          '${_locationList[index].city}',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,

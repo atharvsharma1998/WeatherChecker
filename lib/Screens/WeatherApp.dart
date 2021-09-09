@@ -37,7 +37,7 @@ class _WeatherAppState extends State<WeatherApp>  with WidgetsBindingObserver{
     WidgetsBinding.instance!.addObserver(this);
 
     setState(() {
-
+      preferenceService.getData();
     });
 
   }
@@ -153,7 +153,7 @@ class _WeatherAppState extends State<WeatherApp>  with WidgetsBindingObserver{
                 //var res = await Navigator.push(context, MaterialPageRoute(builder: (context)=>LocationSearch()));
                 //Navigator.push(context, MaterialPageRoute( builder: (context) => LocationSearch()));
                 Navigator.push( context, MaterialPageRoute( builder: (context) => LocationSearch()), ).then((value) => setState(() {
-                  print("pushWala");
+                  //print("pushWala");
                   preferenceService.getData();
                 }));
 

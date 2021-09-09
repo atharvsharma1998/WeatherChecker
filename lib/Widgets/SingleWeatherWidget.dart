@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weather_app/Assistant/PreferencesService.dart';
 import 'package:weather_app/Models/WeatherModel.dart';
 
 
@@ -13,17 +14,41 @@ class SingleWeatherWidget extends StatefulWidget{
   _SingleWeatherWidgetState createState() => _SingleWeatherWidgetState();
 }
 
-class _SingleWeatherWidgetState extends State<SingleWeatherWidget> {
+class _SingleWeatherWidgetState extends State<SingleWeatherWidget> with WidgetsBindingObserver {
+  final preferenceService = PreferencesService();
+
   var _locationList = locationList;
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   setState(() {
-  //     _locationList = locationList;
-  //   });
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+
+    setState(() {
+      preferenceService.getData();
+    });
+
+  }
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('state = $state');
+
+    //final isResumed = state == AppLifecycleState.resumed;
+    if (state == AppLifecycleState.resumed){
+      setState(() {
+        print("inside resumed");
+        preferenceService.getData();
+        print(locationList);
+      });
+
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
